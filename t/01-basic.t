@@ -2,11 +2,15 @@ use v6.c;
 use Test;
 use P5getlogin;
 
-plan 3;
+my @supported = <
+  getlogin getpwuid getuid
+>.map: '&' ~ *;
 
-ok defined(::<&getlogin>),          'is &getlogin imported?';
-nok P5getlogin::<&getlogin>:exists, 'is &getlogin externally NOT accessible?';
+plan @supported * 2;
 
-ok getlogin() ~~ m/^ \w+ /, 'did we get a name';
+for @supported {
+    ok defined(::($_)),          "is $_ imported?";
+    nok P5getlogin::{$_}:exists, "is $_ NOT externally accessible?";
+}
 
 # vim: ft=perl6 expandtab sw=4

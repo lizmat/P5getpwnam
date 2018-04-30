@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lizmat/P5getlogin.svg?branch=master)](https://travis-ci.org/lizmat/P5getlogin)
+
 NAME
 ====
 
@@ -15,7 +17,7 @@ DESCRIPTION
 
 This module tries to mimic the behaviour of the `getlogin` and associated functions of Perl 5 as closely as possible. It exports:
 
-    getlogin
+    getlogin getpwuid getuid
 
 AUTHOR
 ======

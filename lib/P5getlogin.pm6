@@ -3,7 +3,37 @@ unit module P5getlogin:ver<0.0.1>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
-sub getlogin(--> Str) is native is export {*}
+my class PwStruct is repr<CStruct> {
+    has Str    $.pw_name;
+    has Str    $.pw_passwd;
+    has uint32 $.pw_uid;
+    has uint32 $.pw_gid;
+    has long   $.pw_change;
+    has Str    $.pw_class;
+    has Str    $.pw_gecos;
+    has Str    $.pw_dir;
+    has Str    $.pw_shell;
+    has long   $.pw_expire;
+    has int32  $.pw_fields;
+
+    method result(:$scalar, :$uid) {
+        $scalar
+          ?? $uid
+            ?? $.pw_uid
+            !! $.pw_name
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,$.pw_change,$.pw_class,
+              $.pw_gecos,$.pw_dir,$.pw_shell,$.pw_expire,$.pw_fields)
+    }
+}
+
+my sub getlogin(--> Str) is native is export {*}
+my sub getuid(--> uint32) is native is export {*}
+
+my sub _getpwuid(uint32 $uid --> PwStruct) is native is symbol<getpwuid> {*}
+sub getpwuid(Int() $uid, :$scalar) is export {
+    my uint32 $nuid = $uid;
+    _getpwuid($nuid).result(:$scalar)
+}
 
 =begin pod
 
@@ -22,7 +52,7 @@ P5getlogin - Implement Perl 5's getlogin() and associated built-ins
 This module tries to mimic the behaviour of the C<getlogin> and associated
 functions of Perl 5 as closely as possible.  It exports:
 
-    getlogin
+    getlogin getpwuid getuid
 
 =head1 AUTHOR
 
