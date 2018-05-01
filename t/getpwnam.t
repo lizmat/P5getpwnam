@@ -1,6 +1,6 @@
 use v6.c;
 use Test;
-use P5getlogin;
+use P5getpwnam;
 
 plan 11;
 

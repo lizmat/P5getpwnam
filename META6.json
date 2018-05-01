@@ -5,15 +5,15 @@
   ],
   "build-depends" : [ ],
   "depends" : [ ],
-  "description" : "Implement Perl 5's getlogin() and associated built-ins",
+  "description" : "Implement Perl 5's getpwnam() and associated built-ins",
   "license" : "Artistic-2.0",
-  "name" : "P5getlogin",
+  "name" : "P5getpwnam",
   "perl" : "6.c",
   "provides" : {
-    "P5getlogin" : "lib/P5getlogin.pm6"
+    "P5getpwnam" : "lib/P5getpwnam.pm6"
   },
   "resources" : [ ],
-  "source-url" : "https://github.com/lizmat/P5getlogin.git",
+  "source-url" : "https://github.com/lizmat/P5getpwnam.git",
   "tags" : [
     "PERL5",
     "CPAN5"

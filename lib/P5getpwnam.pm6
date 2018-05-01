@@ -1,5 +1,5 @@
 use v6.c;
-unit module P5getlogin:ver<0.0.1>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.1>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
@@ -55,26 +55,28 @@ my sub endpwent() is native is export {*}
 
 =head1 NAME
 
-P5getlogin - Implement Perl 5's getlogin() and associated built-ins
+P5getpwnam - Implement Perl 5's getpwnam() and associated built-ins
 
 =head1 SYNOPSIS
 
-    use P5getlogin;
+    use P5getpwnam;
 
     say "logged in as {getlogin || '(unknown)'}";
 
+    my @result = getpwnam(~$*USER);
+
 =head1 DESCRIPTION
 
-This module tries to mimic the behaviour of the C<getlogin> and associated
+This module tries to mimic the behaviour of the C<getpwnam> and associated
 functions of Perl 5 as closely as possible.  It exports:
 
-    endpwent getlogin getpwuid getpwent getpwnam
+    endpwent getlogin getpwent getpwnam getpwuid
 
 =head1 AUTHOR
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
 
-Source can be located at: https://github.com/lizmat/P5getlogin . Comments and
+Source can be located at: https://github.com/lizmat/P5getpwnam . Comments and
 Pull Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE

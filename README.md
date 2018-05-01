@@ -1,30 +1,32 @@
-[![Build Status](https://travis-ci.org/lizmat/P5getlogin.svg?branch=master)](https://travis-ci.org/lizmat/P5getlogin)
+[![Build Status](https://travis-ci.org/lizmat/P5getpwnam.svg?branch=master)](https://travis-ci.org/lizmat/P5getpwnam)
 
 NAME
 ====
 
-P5getlogin - Implement Perl 5's getlogin() and associated built-ins
+P5getpwnam - Implement Perl 5's getpwnam() and associated built-ins
 
 SYNOPSIS
 ========
 
-    use P5getlogin;
+    use P5getpwnam;
 
     say "logged in as {getlogin || '(unknown)'}";
+
+    my @result = getpwnam(~$*USER);
 
 DESCRIPTION
 ===========
 
-This module tries to mimic the behaviour of the `getlogin` and associated functions of Perl 5 as closely as possible. It exports:
+This module tries to mimic the behaviour of the `getpwnam` and associated functions of Perl 5 as closely as possible. It exports:
 
-    endpwent getlogin getpwuid getpwent getpwnam
+    endpwent getlogin getpwent getpwnam getpwuid
 
 AUTHOR
 ======
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
 
-Source can be located at: https://github.com/lizmat/P5getlogin . Comments and Pull Requests are welcome.
+Source can be located at: https://github.com/lizmat/P5getpwnam . Comments and Pull Requests are welcome.
 
 COPYRIGHT AND LICENSE
 =====================
