@@ -27,13 +27,29 @@ my class PwStruct is repr<CStruct> {
 }
 
 my sub getlogin(--> Str) is native is export {*}
-my sub getuid(--> uint32) is native is export {*}
 
-my sub _getpwuid(uint32 $uid --> PwStruct) is native is symbol<getpwuid> {*}
-sub getpwuid(Int() $uid, :$scalar) is export {
+my sub getpwnam(Str() $name, :$scalar) is export {
+    sub _getpwnam(Str --> PwStruct) is native is symbol<getpwnam> {*}
+    _getpwnam($name).result(:$scalar, :uid($scalar))
+}
+
+my sub getpwuid(Int() $uid, :$scalar) is export {
+    sub _getpwuid(uint32 $uid --> PwStruct) is native is symbol<getpwuid> {*}
     my uint32 $nuid = $uid;
     _getpwuid($nuid).result(:$scalar)
 }
+
+my sub getpwent(:$scalar) is export {
+    sub _getpwent(--> PwStruct) is native is symbol<getpwent> {*}
+    with _getpwent() {
+        .result(:$scalar)
+    }
+    else {
+        $scalar ?? Nil !! ()
+    }
+}
+
+my sub endpwent() is native is export {*}
 
 =begin pod
 
@@ -45,14 +61,14 @@ P5getlogin - Implement Perl 5's getlogin() and associated built-ins
 
     use P5getlogin;
 
-    say "logged in as {getlogin}";
+    say "logged in as {getlogin || '(unknown)'}";
 
 =head1 DESCRIPTION
 
 This module tries to mimic the behaviour of the C<getlogin> and associated
 functions of Perl 5 as closely as possible.  It exports:
 
-    getlogin getpwuid getuid
+    endpwent getlogin getpwuid getpwent getpwnam
 
 =head1 AUTHOR
 

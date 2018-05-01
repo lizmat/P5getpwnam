@@ -10,14 +10,14 @@ SYNOPSIS
 
     use P5getlogin;
 
-    say "logged in as {getlogin}";
+    say "logged in as {getlogin || '(unknown)'}";
 
 DESCRIPTION
 ===========
 
 This module tries to mimic the behaviour of the `getlogin` and associated functions of Perl 5 as closely as possible. It exports:
 
-    getlogin getpwuid getuid
+    endpwent getlogin getpwuid getpwent getpwnam
 
 AUTHOR
 ======
