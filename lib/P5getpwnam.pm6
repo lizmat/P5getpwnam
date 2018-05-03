@@ -14,7 +14,7 @@ my class PwStruct is repr<CStruct> {
     has Str    $.pw_dir;
     has Str    $.pw_shell;
     has long   $.pw_expire;
-    has int32  $.pw_fields;
+    has int64  $.pw_fields;
 
     multi method result(PwStruct:U: :$scalar) {         # call failed
         $scalar ?? Nil !! ()
@@ -24,8 +24,8 @@ my class PwStruct is repr<CStruct> {
           ?? $uid
             ?? $.pw_uid
             !! $.pw_name
-          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,$.pw_change,$.pw_class,
-              $.pw_gecos,$.pw_dir,$.pw_shell) # ,$.pw_expire,$.pw_fields)
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid) #,$.pw_change,$.pw_class,
+#              $.pw_gecos,$.pw_dir,$.pw_shell,$.pw_expire,$.pw_fields)
     }
 }
 
