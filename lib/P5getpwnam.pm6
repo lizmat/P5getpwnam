@@ -24,7 +24,7 @@ my class PwStruct is repr<CStruct> {
           ?? $uid
             ?? $.pw_uid
             !! $.pw_name
-          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid) #,$.pw_change,$.pw_class,
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,$.pw_change) #,$.pw_class,
 #              $.pw_gecos,$.pw_dir,$.pw_shell,$.pw_expire,$.pw_fields)
     }
 }
