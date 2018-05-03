@@ -2,22 +2,13 @@ use v6.c;
 use Test;
 use P5getpwnam;
 
-plan 17;
+plan 16;
 
 my int $userid = +$*USER;
 ok $userid > 0, "we got user ID $userid";
 
-my $username = getlogin;
-if $username {
-    ok $username ~~ m/^ \w+ /, 'did we get a name';
-    is getpwuid($userid,:scalar), $username,
-      'does getlogin/getpwuid give the same';
-}
-else {
-    $username = getpwuid($userid,:scalar);
-    pass "getlogin empty";
-    ok $username ~~ m/^ \w+ /, 'did we get a name';
-}
+my $username = getpwuid($userid,:scalar);
+ok $username ~~ m/^ \w+ /, "we got user name $username";
 
 my @result = getpwuid($userid);
 is @result[0], $username, 'did we get the username in this struct by uid';
