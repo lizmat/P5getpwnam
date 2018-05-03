@@ -94,7 +94,17 @@ my sub getpwent(:$scalar) is export {
     _getpwent.result(:$scalar)
 }
 
-my sub endpwent() is native is export {*}
+my sub setpwent(:$scalar) is export {
+    sub _setpwent() is native is symbol<setpwent> {*}
+    _setpwent;
+    1;  # this is apparently what Perl 5 does, although not documented
+}
+
+my sub endpwent(:$scalar) is export {
+    sub _endpwent() is native is symbol<endpwent> {*}
+    _endpwent;
+    1;  # this is apparently what Perl 5 does, although not documented
+}
 
 =begin pod
 
@@ -115,7 +125,7 @@ P5getpwnam - Implement Perl 5's getpwnam() and associated built-ins
 This module tries to mimic the behaviour of the C<getpwnam> and associated
 functions of Perl 5 as closely as possible.  It exports:
 
-    endpwent getlogin getpwent getpwnam getpwuid
+    endpwent getlogin getpwent getpwnam getpwuid setpwent
 
 =head1 AUTHOR
 
