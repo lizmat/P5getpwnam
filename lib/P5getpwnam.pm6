@@ -1,9 +1,9 @@
 use v6.c;
-unit module P5getpwnam:ver<0.0.2>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.3>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
-my class PwStruct is repr<CStruct> {
+my class PwStructDarwin is repr<CStruct> {  # MacOS appears to have its own
     has Str    $.pw_name;
     has Str    $.pw_passwd;
     has uint32 $.pw_uid;
@@ -14,20 +14,67 @@ my class PwStruct is repr<CStruct> {
     has Str    $.pw_dir;
     has Str    $.pw_shell;
     has long   $.pw_expire;
-    has int64  $.pw_fields;
+    has int32  $.pw_fields;
 
-    multi method result(PwStruct:U: :$scalar) {         # call failed
+    multi method result(::?CLASS:U: :$scalar) {         # call failed
         $scalar ?? Nil !! ()
     }
-    multi method result(PwStruct:D: :$scalar, :$uid) {  # call successful
+    multi method result(::?CLASS:D: :$scalar, :$uid) {  # call successful
         $scalar
           ?? $uid
             ?? $.pw_uid
             !! $.pw_name
-          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,$.pw_change) #,$.pw_class,
-#              $.pw_gecos,$.pw_dir,$.pw_shell,$.pw_expire,$.pw_fields)
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,
+              0,'',$.pw_gecos,$.pw_dir,$.pw_shell,$.pw_expire)
     }
 }
+
+my class PwStructLinux is repr<CStruct> {   # as has Linux
+    has Str    $.pw_name;
+    has Str    $.pw_passwd;
+    has uint32 $.pw_uid;
+    has uint32 $.pw_gid;
+    has Str    $.pw_gecos;
+    has Str    $.pw_dir;
+    has Str    $.pw_shell;
+
+    multi method result(::?CLASS:U: :$scalar) {         # call failed
+        $scalar ?? Nil !! ()
+    }
+    multi method result(::?CLASS:D: :$scalar, :$uid) {  # call successful
+        $scalar
+          ?? $uid
+            ?? $.pw_uid
+            !! $.pw_name
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,
+              0,'',$.pw_gecos,$.pw_dir,$.pw_shell)
+    }
+}
+
+my class PwStructUnix is repr<CStruct> {
+    has Str    $.pw_name;
+    has Str    $.pw_passwd;
+    has uint32 $.pw_uid;
+    has uint32 $.pw_gid;
+    has Str    $.pw_dir;
+    has Str    $.pw_shell;
+
+    multi method result(::?CLASS:U: :$scalar) {         # call failed
+        $scalar ?? Nil !! ()
+    }
+    multi method result(::?CLASS:D: :$scalar, :$uid) {  # call successful
+        $scalar
+          ?? $uid
+            ?? $.pw_uid
+            !! $.pw_name
+          !! ($.pw_name,$.pw_passwd,$.pw_uid,$.pw_gid,
+              0,'','',$.pw_dir,$.pw_shell)
+    }
+}
+
+my constant PwStruct =
+  $*KERNEL.name eq 'darwin' ?? PwStructDarwin !!
+  $*KERNEL.name eq 'linux'  ?? PwStructLinux  !! PwStructUnix;
 
 my sub getlogin(--> Str) is native is export {*}
 
