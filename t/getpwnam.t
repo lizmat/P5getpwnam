@@ -5,7 +5,7 @@ use P5getpwnam;
 plan 15;
 
 my int $userid = +$*USER;
-ok $userid > 0, 'did we get a user ID';
+ok $userid > 0, "we got user ID $userid";
 
 my $username = getlogin;
 if $username {
