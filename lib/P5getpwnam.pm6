@@ -1,6 +1,6 @@
 use v6.c;
 
-unit module P5getpwnam:ver<0.0.5>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.6>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
@@ -117,19 +117,19 @@ multi sub getpwent() { _getpwent.list }
 
 my sub setpwent() is export {
     _setpwent;
-    1;  # this is apparently what Perl 5 does, although not documented
+    1;  # this is apparently what Perl does, although not documented
 }
 
 my sub endpwent() is export {
     _endpwent;
-    1;  # this is apparently what Perl 5 does, although not documented
+    1;  # this is apparently what Perl does, although not documented
 }
 
 =begin pod
 
 =head1 NAME
 
-P5getpwnam - Implement Perl 5's getpwnam() and associated built-ins
+P5getpwnam - Implement Perl's getpwnam() and associated built-ins
 
 =head1 SYNOPSIS
 
@@ -142,7 +142,7 @@ P5getpwnam - Implement Perl 5's getpwnam() and associated built-ins
 =head1 DESCRIPTION
 
 This module tries to mimic the behaviour of the C<getpwnam> and associated
-functions of Perl 5 as closely as possible.  It exports:
+functions of Perl as closely as possible.  It exports:
 
     endpwent getlogin getpwent getpwnam getpwuid setpwent
 
@@ -224,7 +224,7 @@ Pull Requests are welcome.
 
 Copyright 2018-2019 Elizabeth Mattijsen
 
-Re-imagined from Perl 5 as part of the CPAN Butterfly Plan.
+Re-imagined from Perl as part of the CPAN Butterfly Plan.
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
