@@ -2,6 +2,10 @@ Revision history for P5getpwnam
 
 {{$NEXT}}
 
+0.0.7  2019-12-17T21:54:35+01:00
+    - add support for FreeBSD, which happens to be the same as MacOS
+      - spotted by pprocacci++
+
 0.0.6  2019-11-09T22:50:56+01:00
     - changed Perl 5 to Perl
 

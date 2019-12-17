@@ -19,8 +19,8 @@ This module tries to mimic the behaviour of the `getpwnam` and associated functi
 
     endpwent getlogin getpwent getpwnam getpwuid setpwent
 
-ORIGINAL PERL 5 DOCUMENTATION
-=============================
+ORIGINAL PERL DOCUMENTATION
+===========================
 
     getpwnam NAME
     getpwuid UID

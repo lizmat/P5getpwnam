@@ -1,10 +1,10 @@
 use v6.c;
 
-unit module P5getpwnam:ver<0.0.6>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.7>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
-my class PwStructDarwin is repr<CStruct> {  # MacOS appears to have its own
+my class PwStructBSD is repr<CStruct> {  # BSD's  appears to have their own
     has Str    $.pw_name;
     has Str    $.pw_passwd;
     has uint32 $.pw_uid;
@@ -68,8 +68,11 @@ my class PwStructUnix is repr<CStruct> {
 }
 
 my constant PwStruct =
-  $*KERNEL.name eq 'darwin' ?? PwStructDarwin !!
-  $*KERNEL.name eq 'linux'  ?? PwStructLinux  !! PwStructUnix;
+  $*KERNEL.name eq 'darwin' | 'freebsd'
+    ?? PwStructBSD
+    !! $*KERNEL.name eq 'linux'
+      ?? PwStructLinux
+      !! PwStructUnix;
 
 # actual NativeCall interfaces
 sub _getpwnam(Str --> PwStruct) is native is symbol<getpwnam> {*}
@@ -146,7 +149,7 @@ functions of Perl as closely as possible.  It exports:
 
     endpwent getlogin getpwent getpwnam getpwuid setpwent
 
-=head1 ORIGINAL PERL 5 DOCUMENTATION
+=head1 ORIGINAL PERL DOCUMENTATION
 
     getpwnam NAME
     getpwuid UID
