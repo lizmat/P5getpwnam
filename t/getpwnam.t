@@ -22,10 +22,12 @@ is getpwnam($username, :scalar), $userid, 'did we get the uid';
 is @result[0], $username, 'did we get the username in this struct by name';
 is @result[2], $userid,   'did we get the userid in this struct by name';
 
+endpwent;   # seems FreeBSD needs this
 @result = getpwent;
 ok @result, 'did we get anything from getpwent';
 
-my int $seen = 1;
+setpwent;  # reset to be able to see the first entry
+my int $seen = 0;
 my $seen_me;
 while getpwent() -> @result {
     $seen_me = True if @result[0] eq $username && @result[2] == $userid;

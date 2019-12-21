@@ -1,6 +1,6 @@
 use v6.c;
 
-unit module P5getpwnam:ver<0.0.7>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.8>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 

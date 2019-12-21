@@ -2,6 +2,9 @@ Revision history for P5getpwnam
 
 {{$NEXT}}
 
+0.0.8  2019-12-21T10:39:42+01:00
+    - fixed test when installing as root, suggested by ghost++
+
 0.0.7  2019-12-17T21:54:35+01:00
     - add support for FreeBSD, which happens to be the same as MacOS
       - spotted by pprocacci++
