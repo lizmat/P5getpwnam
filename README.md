@@ -1,7 +1,7 @@
 NAME
 ====
 
-P5getpwnam - Implement Perl's getpwnam() and associated built-ins
+Raku port of Perl's getpwnam() and associated built-ins
 
 SYNOPSIS
 ========
@@ -15,7 +15,9 @@ SYNOPSIS
 DESCRIPTION
 ===========
 
-This module tries to mimic the behaviour of the `getpwnam` and associated functions of Perl as closely as possible. It exports:
+This module tries to mimic the behaviour of Perl's `getpwnam` and associated built-ins as closely as possible in the Raku Programming Language.
+
+It exports:
 
     endpwent getlogin getpwent getpwnam getpwuid setpwent
 
@@ -87,6 +89,11 @@ ORIGINAL PERL DOCUMENTATION
             Do not consider "getlogin" for authentication: it is not as secure
             as "getpwuid".
 
+PORTING CAVEATS
+===============
+
+This module depends on the availability of POSIX semantics. This is generally not available on Windows, so this module will probably not work on Windows.
+
 AUTHOR
 ======
 
@@ -97,7 +104,7 @@ Source can be located at: https://github.com/lizmat/P5getpwnam . Comments and Pu
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2018-2019 Elizabeth Mattijsen
+Copyright 2018-2020 Elizabeth Mattijsen
 
 Re-imagined from Perl as part of the CPAN Butterfly Plan.
 

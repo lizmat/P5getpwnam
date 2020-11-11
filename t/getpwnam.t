@@ -1,4 +1,4 @@
-use v6.c;
+use v6.*;
 use Test;
 use P5getpwnam;
 %*ENV<RAKUDO_NO_DEPRECATIONS> = True;
@@ -48,4 +48,4 @@ is getpwuid(Scalar, 9999), Nil, 'non-existing name uid';
 is getpwuid(9999, :scalar), Nil, 'non-existing name uid';
 is-deeply getpwuid(9999), (), 'non-existing uid';
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

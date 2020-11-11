@@ -1,6 +1,6 @@
-use v6.c;
+use v6.*;
 
-unit module P5getpwnam:ver<0.0.8>:auth<cpan:ELIZABETH>;
+unit module P5getpwnam:ver<0.0.9>:auth<cpan:ELIZABETH>;
 
 use NativeCall;
 
@@ -132,7 +132,7 @@ my sub endpwent() is export {
 
 =head1 NAME
 
-P5getpwnam - Implement Perl's getpwnam() and associated built-ins
+Raku port of Perl's getpwnam() and associated built-ins
 
 =head1 SYNOPSIS
 
@@ -144,8 +144,10 @@ P5getpwnam - Implement Perl's getpwnam() and associated built-ins
 
 =head1 DESCRIPTION
 
-This module tries to mimic the behaviour of the C<getpwnam> and associated
-functions of Perl as closely as possible.  It exports:
+This module tries to mimic the behaviour of Perl's C<getpwnam> and associated
+built-ins as closely as possible in the Raku Programming Language.
+
+It exports:
 
     endpwent getlogin getpwent getpwnam getpwuid setpwent
 
@@ -216,6 +218,12 @@ functions of Perl as closely as possible.  It exports:
             Do not consider "getlogin" for authentication: it is not as secure
             as "getpwuid".
 
+=head1 PORTING CAVEATS
+
+This module depends on the availability of POSIX semantics.  This is
+generally not available on Windows, so this module will probably not work
+on Windows.
+
 =head1 AUTHOR
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
@@ -225,10 +233,12 @@ Pull Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2018-2019 Elizabeth Mattijsen
+Copyright 2018-2020 Elizabeth Mattijsen
 
 Re-imagined from Perl as part of the CPAN Butterfly Plan.
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
 =end pod
+
+# vim: expandtab shiftwidth=4
