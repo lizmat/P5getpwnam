@@ -1,7 +1,3 @@
-use v6.*;
-
-unit module P5getpwnam:ver<0.0.10>:auth<zef:lizmat>;
-
 use NativeCall;
 
 my class PwStructBSD is repr<CStruct> {  # BSD's  appears to have their own
@@ -86,21 +82,10 @@ my sub getlogin(--> Str) is native is export {*}
 
 my proto sub getpwnam(|) is export {*}
 multi sub getpwnam(Scalar:U, Str() $name) { _getpwnam($name).scalar(:uid) }
-multi sub getpwnam(Str() $name, :$scalar!)
-  is DEPRECATED('Scalar as first positional')
-{
-    _getpwnam($name).scalar(:uid)
-}
 multi sub getpwnam(Str() $name) { _getpwnam($name).list }
 
 my proto sub getpwuid(|) is export {*}
 multi sub getpwuid(Scalar:U, Int() $uid) {
-    my uint32 $nuid = $uid;
-    _getpwuid($nuid).scalar
-}
-multi sub getpwuid(Int() $uid, :$scalar!)
-  is DEPRECATED('Scalar as first positional')
-{
     my uint32 $nuid = $uid;
     _getpwuid($nuid).scalar
 }
@@ -111,11 +96,6 @@ multi sub getpwuid(Int() $uid) {
 
 my proto sub getpwent(|) is export {*}
 multi sub getpwent(Scalar:U) { _getpwent.scalar }
-multi sub getpwent(:$scalar!)
-  is DEPRECATED('Scalar as first positional')
-{
-    _getpwent.scalar
-}
 multi sub getpwent() { _getpwent.list }
 
 my sub setpwent() is export {
@@ -228,12 +208,16 @@ on Windows.
 
 Elizabeth Mattijsen <liz@raku.rocks>
 
+If you like this module, or what I’m doing more generally, committing to a
+L<small sponsorship|https://github.com/sponsors/lizmat/>  would mean a great
+deal to me!
+
 Source can be located at: https://github.com/lizmat/P5getpwnam . Comments and
 Pull Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2018, 2019, 2020, 2021 Elizabeth Mattijsen
+Copyright 2018, 2019, 2020, 2021, 2023 Elizabeth Mattijsen
 
 Re-imagined from Perl as part of the CPAN Butterfly Plan.
 
